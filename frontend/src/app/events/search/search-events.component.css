@@ -1,0 +1,135 @@
+.search-shell {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 48px 24px 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.search-header {
+  padding: 36px;
+  color: #fff;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.chips .pill {
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.filter-card {
+  padding: 32px;
+}
+
+.filter-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.filter-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.loading {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.spinner {
+  border: 4px solid rgba(148, 163, 184, 0.3);
+  border-left-color: var(--brand-400);
+  border-radius: 50%;
+  width: 46px;
+  height: 46px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 16px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.banner {
+  border-radius: 14px;
+  padding: 12px 18px;
+  font-weight: 600;
+}
+
+.banner.success {
+  background: rgba(16, 185, 129, 0.18);
+  color: #065f46;
+  border: 1px solid rgba(16, 185, 129, 0.35);
+}
+
+.banner.danger {
+  background: rgba(248, 113, 113, 0.15);
+  color: #b91c1c;
+  border: 1px solid rgba(248, 113, 113, 0.4);
+}
+
+.results {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.result-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.result-card {
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 20px;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  background: #f8fafc;
+}
+
+.result-card h3 {
+  margin: 6px 0;
+}
+
+.event-date {
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 12px;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.result-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-end;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px;
+  border-radius: 24px;
+  border: 1px dashed rgba(15, 23, 42, 0.2);
+  color: var(--text-muted);
+}

@@ -1,0 +1,130 @@
+<div class="container">
+  <div *ngIf="isLoading" class="loading">
+    <div class="spinner"></div>
+    <p>Loading event details...</p>
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger">
+    <strong>Error:</strong> {{ error }}
+  </div>
+  
+  <div *ngIf="success" class="alert alert-success">
+    <strong>Success:</strong> {{ success }}
+  </div>
+
+  <div *ngIf="event && !isLoading" class="details-shell">
+    <div class="header">
+      <h2>{{ event.title }}</h2>
+      <div class="header-actions">
+        <button class="btn btn-ghost" (click)="router.navigate(['/events/search'])">Back to Search</button>
+        <button class="btn btn-secondary" (click)="router.navigate(['/events'])">My Events</button>
+      </div>
+    </div>
+
+    <div class="event-details surface-card">
+      <div class="event-info">
+        <p><strong>Description:</strong> {{ event.description }}</p>
+        <p><strong>Date:</strong> {{ event.date | date:'full' }}</p>
+        <p><strong>Location:</strong> {{ event.location }}</p>
+      </div>
+
+      <!-- Organizer Actions -->
+      <div *ngIf="isOrganizer" class="organizer-section">
+        <h3>Organizer Actions</h3>
+        
+        <!-- Invite Users -->
+        <div class="invite-section">
+          <h4>Invite Participants</h4>
+          <form [formGroup]="inviteForm" (ngSubmit)="onInvite()" class="invite-form">
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input 
+                type="email" 
+                id="email" 
+                formControlName="email" 
+                class="form-control"
+                [class.is-invalid]="email?.invalid && email?.touched">
+              <div *ngIf="email?.invalid && email?.touched" class="invalid-feedback">
+                <div *ngIf="email?.errors?.['required']">Email is required</div>
+                <div *ngIf="email?.errors?.['email']">Please enter a valid email</div>
+              </div>
+            </div>
+            <button 
+              type="submit" 
+              class="btn btn-primary"
+              [disabled]="inviteForm.invalid">
+              Invite
+            </button>
+          </form>
+        </div>
+
+        <!-- Delete Event -->
+        <div class="delete-section">
+          <button class="btn btn-danger" (click)="onDeleteEvent()">Delete Event</button>
+        </div>
+      </div>
+
+      <!-- Join Event (for non-participants) -->
+      <div *ngIf="canJoin" class="join-section">
+        <h3>Join This Event</h3>
+        <p class="text-muted">Join this event to set your attendance status and stay updated.</p>
+        <button class="btn btn-primary" (click)="onJoinEvent()">
+          Join Event
+        </button>
+      </div>
+
+      <!-- Participant Actions (for all participants including organizers) -->
+      <div *ngIf="isParticipant" class="participant-section">
+        <h3>Your Response</h3>
+        <div class="response-buttons">
+          <button 
+            class="btn btn-success" 
+            (click)="onUpdateResponse('Going')"
+            [class.active]="currentUserStatus === 'Going'">
+            Going
+          </button>
+          <button 
+            class="btn btn-warning" 
+            (click)="onUpdateResponse('Maybe')"
+            [class.active]="currentUserStatus === 'Maybe'">
+            Maybe
+          </button>
+          <button 
+            class="btn btn-danger" 
+            (click)="onUpdateResponse('Not Going')"
+            [class.active]="currentUserStatus === 'Not Going'">
+            Not Going
+          </button>
+        </div>
+      </div>
+
+      <!-- Participants List (visible to all, but organizers see full details) -->
+      <div class="participants-section">
+        <h3>Participants <span *ngIf="isOrganizer" class="badge">{{ event.participants.length }} total</span></h3>
+        <div *ngIf="event.participants.length === 0" class="no-participants">
+          No participants yet.
+        </div>
+        <div *ngFor="let participant of event.participants; let i = index" class="participant-card">
+          <div class="participant-header">
+            <div>
+              <strong>{{ participant.role === 'organizer' ? '👑 Organizer' : '👤 Attendee' }}</strong>
+              <p *ngIf="participant.email" class="participant-email">{{ participant.email }}</p>
+            </div>
+            <span *ngIf="participant.user_id === currentUserId" class="you-badge">You</span>
+          </div>
+          <p *ngIf="participant.status" class="participant-status">
+            <strong>Status:</strong> 
+            <span [class.status-going]="participant.status === 'Going'"
+                  [class.status-maybe]="participant.status === 'Maybe'"
+                  [class.status-not-going]="participant.status === 'Not Going'">
+              {{ participant.status }}
+            </span>
+          </p>
+          <p *ngIf="!participant.status" class="participant-status text-muted">
+            No response yet
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

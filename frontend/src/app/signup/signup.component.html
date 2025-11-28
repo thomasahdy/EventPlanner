@@ -1,73 +1,78 @@
-<div class="signup-container">
-  <div class="signup-card">
-    <h1>Create Account</h1>
-    <p class="subtitle">Join EventPlanner today</p>
+<section class="auth-shell">
+  <div class="auth-panel brand-panel">
+    <p class="eyebrow">EventPlanner</p>
+    <h2>Give every gathering the stage it deserves.</h2>
+    <p class="text-muted">
+      Launch product debuts, internal summits, or intimate dinners with the same level of polish.
+    </p>
+    <ul class="brand-points">
+      <li>Reusable templates for every format</li>
+      <li>Collaborative notes & approvals</li>
+      <li>Detail-rich guest profiles</li>
+    </ul>
+    <div class="quote-card">
+      <p>“Within a week, EventPlanner replaced five tools and our inbox threads.”</p>
+      <span>— Marcus Lee, Executive Producer</span>
+    </div>
+  </div>
 
-    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input 
-          type="email" 
-          id="email" 
+  <div class="auth-panel form-panel surface-card">
+    <div class="form-header">
+      <span class="badge">Create your space</span>
+      <h1>Set up your account</h1>
+      <p class="text-muted">We’ll tailor the experience once you’re inside.</p>
+    </div>
+
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="auth-form">
+      <div *ngIf="errorMessage" class="form-alert danger">
+        {{ errorMessage }}
+      </div>
+
+      <label class="form-field">
+        <span class="form-label">Work email</span>
+        <input
+          type="email"
+          class="input"
+          id="email"
           formControlName="email"
-          class="form-control"
-          [class.invalid]="email?.invalid && email?.touched"
-          placeholder="Enter your email"
-        />
-        <div class="error-message" *ngIf="email?.invalid && email?.touched">
-          <small *ngIf="email?.errors?.['required']">Email is required</small>
-          <small *ngIf="email?.errors?.['email']">Please enter a valid email</small>
-        </div>
-      </div>
+          placeholder="team@studio.co"
+          [class.invalid]="email?.invalid && email?.touched">
+      </label>
 
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input 
-          type="password" 
-          id="password" 
+      <label class="form-field">
+        <span class="form-label">Password</span>
+        <input
+          type="password"
+          class="input"
+          id="password"
           formControlName="password"
-          class="form-control"
-          [class.invalid]="password?.invalid && password?.touched"
-          placeholder="Create a password (min 8 characters)"
-        />
-        <div class="error-message" *ngIf="password?.invalid && password?.touched">
-          <small *ngIf="password?.errors?.['required']">Password is required</small>
-          <small *ngIf="password?.errors?.['minlength']">Password must be at least 8 characters</small>
-        </div>
-      </div>
+          placeholder="At least 8 characters"
+          [class.invalid]="password?.invalid && password?.touched">
+      </label>
 
-      <div class="form-group">
-        <label for="confirmPassword">Confirm Password</label>
-        <input 
-          type="password" 
-          id="confirmPassword" 
+      <label class="form-field">
+        <span class="form-label">Confirm password</span>
+        <input
+          type="password"
+          class="input"
+          id="confirmPassword"
           formControlName="confirmPassword"
-          class="form-control"
-          [class.invalid]="confirmPassword?.invalid && confirmPassword?.touched"
-          placeholder="Confirm your password"
-        />
-        <div class="error-message" *ngIf="confirmPassword?.invalid && confirmPassword?.touched">
-          <small *ngIf="confirmPassword?.errors?.['required']">Please confirm your password</small>
-          <small *ngIf="confirmPassword?.errors?.['passwordMismatch']">Passwords do not match</small>
-        </div>
-      </div>
+          placeholder="Repeat password"
+          [class.invalid]="confirmPassword?.invalid && confirmPassword?.touched">
+      </label>
 
-      <div class="error-message" *ngIf="errorMessage">
-        <p>{{ errorMessage }}</p>
+      <div class="form-actions">
+        <button type="button" class="btn btn-ghost" (click)="onCancel()">Skip for now</button>
+        <button type="submit" class="btn btn-dark" [disabled]="signupForm.invalid || isLoading">
+          <span *ngIf="isLoading">Creating workspace...</span>
+          <span *ngIf="!isLoading">Create account</span>
+        </button>
       </div>
-
-      <button 
-        type="submit" 
-        class="btn-primary" 
-        [disabled]="signupForm.invalid || isLoading"
-      >
-        <span *ngIf="!isLoading">Create Account</span>
-        <span *ngIf="isLoading">Creating Account...</span>
-      </button>
     </form>
 
-    <p class="footer-text">
-      Already have an account? <a routerLink="/login">Login</a>
+    <p class="switch">
+      Already with us?
+      <a routerLink="/login">Sign in</a>
     </p>
   </div>
-</div>
+</section>

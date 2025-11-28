@@ -69,4 +69,26 @@ export class AuthService {
   isLoggedIn(): boolean {
     return this.hasToken();
   }
+
+  getCurrentUserId(): string | null {
+    const token = this.getToken();
+    if (!token) {
+      return null;
+    }
+
+    try {
+      const payloadSegment = token.split('.')[1];
+      if (!payloadSegment) {
+        return null;
+      }
+
+      // Support base64url encoding used by JWT
+      const normalized = payloadSegment.replace(/-/g, '+').replace(/_/g, '/');
+      const decoded = JSON.parse(atob(normalized));
+      return decoded?.sub ?? null;
+    } catch (error) {
+      console.error('Failed to decode token payload', error);
+      return null;
+    }
+  }
 }

@@ -1,30 +1,119 @@
-<div class="dashboard-container">
-  <nav class="navbar">
-    <div class="nav-content">
-      <h1>EventPlanner</h1>
-      <button class="btn-logout" (click)="logout()">Logout</button>
-    </div>
-  </nav>
-
-  <div class="main-content">
-    <div class="welcome-card">
-      <h2>🎉 Welcome to EventPlanner!</h2>
-      <p>You've successfully logged in to your account.</p>
-      <div class="info-box">
-        <p>✅ Authentication is working correctly</p>
-        <p>✅ Your session is secure</p>
-        <p>✅ Ready to start planning events!</p>
+<div class="dashboard-shell">
+  <header class="dash-hero glass-card">
+    <div>
+      <p class="eyebrow">Control center</p>
+      <h1>Design experiences your guests remember.</h1>
+      <p class="text-muted">
+        Your upcoming run sheets, invitations, and insights are synced across the workspace.
+      </p>
+      <div class="hero-actions">
+        <button class="btn btn-primary" routerLink="/events/create">Plan new event</button>
+        <button class="btn btn-ghost" routerLink="/events">Review events</button>
       </div>
     </div>
-
-    <div class="feature-grid">
-      <div class="feature-card">
-        <div class="icon">📅</div>
-        <h3>Create Events</h3>
-        <p>Plan and organize your events with ease</p>
-      </div>
-
-      
+    <div class="hero-side">
+      <div class="pill ghost">Next event</div>
+      <p class="hero-event">Company All Hands · 12 Jan · NYC</p>
+      <ul class="hero-metrics">
+        <li>
+          <span>RSVPs In</span>
+          <strong>76%</strong>
+        </li>
+        <li>
+          <span>Logistics Tasks</span>
+          <strong>12 open</strong>
+        </li>
+        <li>
+          <span>Vendors</span>
+          <strong>4 locked</strong>
+        </li>
+      </ul>
+      <button class="btn btn-dark logout" (click)="logout()">Sign out</button>
     </div>
-  </div>
+  </header>
+
+  <section class="stat-wrapper">
+    <article class="surface-card stat-item">
+      <p class="stat-label">Events this quarter</p>
+      <h3>08</h3>
+      <p class="change positive">+2 vs. last quarter</p>
+    </article>
+    <article class="surface-card stat-item">
+      <p class="stat-label">Average response time</p>
+      <h3>3.2 hrs</h3>
+      <p class="change neutral">Stable</p>
+    </article>
+    <article class="surface-card stat-item">
+      <p class="stat-label">Team collaborators</p>
+      <h3>14</h3>
+      <p class="change positive">+3 new invites</p>
+    </article>
+  </section>
+
+  <section class="dashboard-grid">
+    <article class="surface-card action-card">
+      <header>
+        <div>
+          <p class="eyebrow">Quick links</p>
+          <h2>Handle what matters next.</h2>
+        </div>
+      </header>
+      <div class="action-buttons">
+        <button class="action-btn" routerLink="/events">
+          <span>My events</span>
+          <small>Track hosted + invited</small>
+        </button>
+        <button class="action-btn" routerLink="/events/create">
+          <span>Create agenda</span>
+          <small>Start from curated template</small>
+        </button>
+        <button class="action-btn" routerLink="/events/search">
+          <span>Discover events</span>
+          <small>Filter by roles & times</small>
+        </button>
+      </div>
+    </article>
+
+    <article class="surface-card recap-card">
+      <header>
+        <p class="eyebrow">Logistics checklist</p>
+        <h2>Keep execution tight.</h2>
+      </header>
+      <ul class="task-list">
+        <li>
+          <span>Confirm staging vendor availability</span>
+          <small>Due Friday</small>
+        </li>
+        <li>
+          <span>Send VIP reminder with updated parking pass</span>
+          <small>Due Tomorrow</small>
+        </li>
+        <li>
+          <span>Finalize talent hospitality riders</span>
+          <small>Due Next week</small>
+        </li>
+      </ul>
+    </article>
+
+    <article class="surface-card recap-card">
+      <header>
+        <p class="eyebrow">Insights</p>
+        <h2>Signals from recent events.</h2>
+      </header>
+      <div class="insight-list">
+        <div>
+          <strong>Engagement up 12%</strong>
+          <p class="text-muted">Guests stayed through the entire session block.</p>
+        </div>
+        <div>
+          <strong>Best RSVP channel: SMS</strong>
+          <p class="text-muted">Average confirmation rate 1.8x vs email.</p>
+        </div>
+        <div>
+          <strong>Top template: Launch Lab</strong>
+          <p class="text-muted">Used by 6 teams this month.</p>
+        </div>
+      </div>
+    </article>
+  </section>
 </div>

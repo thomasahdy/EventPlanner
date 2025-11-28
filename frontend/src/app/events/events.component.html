@@ -1,0 +1,129 @@
+<div class="events-page">
+  <section class="hero-card">
+    <div>
+      <p class="eyebrow">Plan with confidence</p>
+      <h2>Events Control Center</h2>
+      <p class="subtitle">
+        Manage the events you host and attend from one streamlined dashboard.
+      </p>
+    </div>
+    <div class="hero-actions">
+      <button class="btn btn-primary" [routerLink]="['/events/create']">Create Event</button>
+      <button class="btn btn-outline" (click)="refreshEvents()" [disabled]="isLoading">
+        Refresh
+      </button>
+    </div>
+  </section>
+
+  <div *ngIf="isLoading" class="loading">
+    <div class="spinner"></div>
+    <p>Loading your events...</p>
+  </div>
+
+  <div *ngIf="success" class="alert alert-success">
+    {{ success }}
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger">
+    <div>
+      <strong>Heads up:</strong> {{ error }}
+    </div>
+    <button class="btn btn-sm btn-outline" (click)="refreshEvents()">Try again</button>
+  </div>
+
+  <section class="panel">
+    <div class="panel-header">
+      <div>
+        <h3>Events I'm Organizing</h3>
+        <p class="subtext">Invite people, edit details, or remove an event.</p>
+      </div>
+      <span class="count-chip">{{ organizedEvents.length }} active</span>
+    </div>
+
+    <div *ngIf="organizedEvents.length === 0 && !isLoading" class="empty-state">
+      <h4>You haven't organized any events yet</h4>
+      <p>Share your plans, send invitations, and keep attendees aligned.</p>
+      <button class="btn btn-primary" [routerLink]="['/events/create']">Create your first event</button>
+    </div>
+
+    <div class="events-grid" *ngIf="organizedEvents.length > 0">
+      <article class="event-card" *ngFor="let event of organizedEvents">
+        <div class="card-header">
+          <div class="event-datetime">
+            <span class="event-day">{{ event.date | date:'MMM d' }}</span>
+            <span class="event-time">{{ event.date | date:'shortTime' }}</span>
+          </div>
+          <span class="status-chip accent">Organizer</span>
+        </div>
+
+        <div class="card-body">
+          <h4>{{ event.title }}</h4>
+          <p>{{ event.description }}</p>
+          <div class="meta-row">
+            <span class="meta-item">
+              <span class="label">Location</span>
+              <strong>{{ event.location }}</strong>
+            </span>
+            <span class="meta-item">
+              <span class="label">Guests</span>
+              <strong>{{ event.participants.length }}</strong>
+            </span>
+          </div>
+        </div>
+
+        <div class="card-actions">
+          <button class="btn btn-secondary" [routerLink]="['/events', event.id || event._id]">View & Manage</button>
+          <button class="btn btn-danger" (click)="onDeleteEvent(event.id || event._id)">Delete</button>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="panel-header">
+      <div>
+        <h3>Events I'm Invited To</h3>
+        <p class="subtext">Respond quickly and keep track of the schedule.</p>
+      </div>
+      <span class="count-chip">{{ invitedEvents.length }} upcoming</span>
+    </div>
+
+    <div *ngIf="invitedEvents.length === 0 && !isLoading" class="empty-state alt">
+      <h4>No invitations just yet</h4>
+      <p>Once someone adds you to an event, it will appear here.</p>
+    </div>
+
+    <div class="events-grid" *ngIf="invitedEvents.length > 0">
+      <article class="event-card" *ngFor="let event of invitedEvents">
+        <div class="card-header">
+          <div class="event-datetime">
+            <span class="event-day">{{ event.date | date:'MMM d' }}</span>
+            <span class="event-time">{{ event.date | date:'shortTime' }}</span>
+          </div>
+          <span class="status-chip">{{ getEventStatus(event.participants) }}</span>
+        </div>
+
+        <div class="card-body">
+          <h4>{{ event.title }}</h4>
+          <p>{{ event.description }}</p>
+          <div class="meta-row">
+            <span class="meta-item">
+              <span class="label">Location</span>
+              <strong>{{ event.location }}</strong>
+            </span>
+            <span class="meta-item">
+              <span class="label">Host</span>
+              <strong>{{ event.organizer_id | slice:0:6 }}&hellip;</strong>
+            </span>
+          </div>
+        </div>
+
+        <div class="card-actions single">
+          <button class="btn btn-secondary" [routerLink]="['/events', event.id || event._id]">
+            View details
+          </button>
+        </div>
+      </article>
+    </div>
+  </section>
+</div>

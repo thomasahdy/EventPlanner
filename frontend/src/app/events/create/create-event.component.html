@@ -1,0 +1,127 @@
+<div class="create-shell">
+  <section class="create-hero glass-card">
+    <div>
+      <p class="eyebrow">New experience</p>
+      <h1>Craft a memorable event journey.</h1>
+      <p>Capture intent, outline logistics, and launch invites in minutes.</p>
+    </div>
+    <ul class="hero-steps">
+      <li>
+        <span>01</span>
+        <strong>Define the story</strong>
+      </li>
+      <li>
+        <span>02</span>
+        <strong>Lock the timeline</strong>
+      </li>
+      <li>
+        <span>03</span>
+        <strong>Invite collaborators</strong>
+      </li>
+    </ul>
+  </section>
+
+  <div class="create-grid">
+    <form [formGroup]="eventForm" (ngSubmit)="onSubmit()" class="surface-card form-card">
+      <header>
+        <h2>Event Details</h2>
+        <p class="text-muted">You can refine the agenda and guest list later.</p>
+      </header>
+
+      <div *ngIf="success" class="banner success">
+        {{ success }}
+      </div>
+      
+      <div *ngIf="error" class="banner danger">
+        {{ error }}
+      </div>
+
+      <label class="form-field">
+        <span class="form-label">Event title *</span>
+        <input
+          type="text"
+          class="input"
+          id="title"
+          formControlName="title"
+          placeholder="Spring leadership off-site"
+          [class.invalid]="title?.invalid && title?.touched">
+        <small *ngIf="title?.invalid && title?.touched" class="field-hint">
+          {{ title?.errors?.['required'] ? 'Title is required.' : 'Minimum 3 characters.' }}
+        </small>
+      </label>
+
+      <label class="form-field">
+        <span class="form-label">Description *</span>
+        <textarea
+          class="input"
+          rows="4"
+          id="description"
+          formControlName="description"
+          placeholder="What experience are you designing?"
+          [class.invalid]="description?.invalid && description?.touched"></textarea>
+        <small *ngIf="description?.invalid && description?.touched" class="field-hint">
+          {{ description?.errors?.['required'] ? 'Description is required.' : 'Minimum 10 characters.' }}
+        </small>
+      </label>
+
+      <div class="form-row">
+        <label class="form-field">
+          <span class="form-label">Date *</span>
+          <input type="date" class="input" id="date" formControlName="date" [class.invalid]="date?.invalid && date?.touched">
+          <small *ngIf="date?.invalid && date?.touched" class="field-hint">
+            Pick a date to anchor the itinerary.
+          </small>
+        </label>
+        <label class="form-field">
+          <span class="form-label">Time *</span>
+          <input type="time" class="input" id="time" formControlName="time" [class.invalid]="time?.invalid && time?.touched">
+          <small *ngIf="time?.invalid && time?.touched" class="field-hint">
+            Select a start time.
+          </small>
+        </label>
+      </div>
+
+      <label class="form-field">
+        <span class="form-label">Location *</span>
+        <input
+          type="text"
+          class="input"
+          id="location"
+          formControlName="location"
+          placeholder="Venue, city, or virtual link"
+          [class.invalid]="location?.invalid && location?.touched">
+        <small *ngIf="location?.invalid && location?.touched" class="field-hint">
+          Share at least 3 characters.
+        </small>
+      </label>
+
+      <div class="form-actions">
+        <button type="button" class="btn btn-ghost" (click)="onCancel()" [disabled]="isSubmitting">
+          Cancel
+        </button>
+        <button type="submit" class="btn btn-primary" [disabled]="eventForm.invalid || isSubmitting">
+          <span *ngIf="isSubmitting">Publishing...</span>
+          <span *ngIf="!isSubmitting">Create event</span>
+        </button>
+      </div>
+    </form>
+
+    <aside class="glass-card tips-card">
+      <p class="eyebrow">Organizer tips</p>
+      <ul>
+        <li>
+          <strong>Lead with purpose.</strong>
+          <span>Capture the “why” so collaborators stay aligned.</span>
+        </li>
+        <li>
+          <strong>Set the tone.</strong>
+          <span>Location hints at formality—include context for guests.</span>
+        </li>
+        <li>
+          <strong>Think logistics early.</strong>
+          <span>Time impacts catering, AV, and crew scheduling.</span>
+        </li>
+      </ul>
+    </aside>
+  </div>
+</div>

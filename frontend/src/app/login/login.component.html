@@ -1,57 +1,67 @@
-<div class="login-container">
-  <div class="login-card">
-    <h1>Login</h1>
-    <p class="subtitle">Welcome back to EventPlanner</p>
+<section class="auth-shell">
+  <div class="auth-panel brand-panel">
+    <p class="eyebrow">EventPlanner</p>
+    <h2>Design events that feel intentional.</h2>
+    <p class="text-muted">
+      Keep collaborators aligned, capture every RSVP, and glide from rehearsal to showtime.
+    </p>
+    <ul class="brand-points">
+      <li>Unified timelines & reminders</li>
+      <li>Smarter invitations with live statuses</li>
+      <li>Insights that guide the next big moment</li>
+    </ul>
+    <div class="quote-card">
+      <p>“EventPlanner helps us treat every off-site like a flagship launch.”</p>
+      <span>— Layla Gomez, Experience Lead</span>
+    </div>
+  </div>
 
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input 
-          type="email" 
-          id="email" 
+  <div class="auth-panel form-panel surface-card">
+    <div class="form-header">
+      <span class="badge">Welcome back</span>
+      <h1>Log in to your workspace</h1>
+      <p class="text-muted">Pick up where you left off—your schedule, guests, and insights await.</p>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="auth-form">
+      <div *ngIf="errorMessage" class="form-alert danger">
+        {{ errorMessage }}
+      </div>
+
+      <label class="form-field">
+        <span class="form-label">Email address</span>
+        <input
+          type="email"
+          class="input"
+          id="email"
           formControlName="email"
-          class="form-control"
-          [class.invalid]="email?.invalid && email?.touched"
-          placeholder="Enter your email"
-        />
-        <div class="error-message" *ngIf="email?.invalid && email?.touched">
-          <small *ngIf="email?.errors?.['required']">Email is required</small>
-          <small *ngIf="email?.errors?.['email']">Please enter a valid email</small>
-        </div>
-      </div>
+          placeholder="you@studio.co"
+          [class.invalid]="email?.invalid && email?.touched">
+      </label>
 
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input 
-          type="password" 
-          id="password" 
+      <label class="form-field">
+        <span class="form-label">Password</span>
+        <input
+          type="password"
+          class="input"
+          id="password"
           formControlName="password"
-          class="form-control"
-          [class.invalid]="password?.invalid && password?.touched"
           placeholder="Enter your password"
-        />
-        <div class="error-message" *ngIf="password?.invalid && password?.touched">
-          <small *ngIf="password?.errors?.['required']">Password is required</small>
-          <small *ngIf="password?.errors?.['minlength']">Password must be at least 6 characters</small>
-        </div>
-      </div>
+          [class.invalid]="password?.invalid && password?.touched">
+      </label>
 
-      <div class="error-message" *ngIf="errorMessage">
-        <p>{{ errorMessage }}</p>
+      <div class="form-actions">
+        <button type="button" class="btn btn-ghost" (click)="onCancel()">Back to landing</button>
+        <button type="submit" class="btn btn-dark" [disabled]="loginForm.invalid || isLoading">
+          <span *ngIf="isLoading">Signing you in...</span>
+          <span *ngIf="!isLoading">Continue</span>
+        </button>
       </div>
-
-      <button 
-        type="submit" 
-        class="btn-primary" 
-        [disabled]="loginForm.invalid || isLoading"
-      >
-        <span *ngIf="!isLoading">Login</span>
-        <span *ngIf="isLoading">Logging in...</span>
-      </button>
     </form>
 
-    <p class="footer-text">
-      Don't have an account? <a routerLink="/signup">Sign up</a>
+    <p class="switch">
+      New here?
+      <a routerLink="/signup">Create an account</a>
     </p>
   </div>
-</div>
+</section>

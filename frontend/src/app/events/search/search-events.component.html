@@ -1,0 +1,100 @@
+<div class="search-shell">
+  <section class="search-header glass-card">
+    <div>
+      <p class="eyebrow">Find the right moment</p>
+      <h1>Browse events you host, join, or follow.</h1>
+      <p class="text-muted">
+        Combine keywords, roles, and time frames to surface the sessions you care about.
+      </p>
+    </div>
+    <div class="chips">
+      <span class="pill">Team summits</span>
+      <span class="pill">Launch events</span>
+      <span class="pill">Community meetups</span>
+    </div>
+  </section>
+
+  <form [formGroup]="searchForm" (ngSubmit)="searchEvents()" class="surface-card filter-card">
+    <div class="filter-grid">
+      <label class="form-field">
+        <span class="form-label">Keyword</span>
+        <input
+          type="text"
+          class="input"
+          id="keyword"
+          formControlName="keyword"
+          placeholder="Search by title, host, or description">
+      </label>
+
+      <label class="form-field">
+        <span class="form-label">Role</span>
+        <select id="role" class="input" formControlName="role">
+          <option value="">Any role</option>
+          <option value="organizer">Organizer</option>
+          <option value="attendee">Attendee</option>
+        </select>
+      </label>
+
+      <label class="form-field">
+        <span class="form-label">Start date</span>
+        <input type="date" class="input" id="startDate" formControlName="startDate">
+      </label>
+
+      <label class="form-field">
+        <span class="form-label">End date</span>
+        <input type="date" class="input" id="endDate" formControlName="endDate">
+      </label>
+    </div>
+
+    <div class="filter-actions">
+      <button type="button" class="btn btn-ghost" (click)="onReset()">Clear filters</button>
+      <button type="submit" class="btn btn-primary">Search library</button>
+    </div>
+  </form>
+
+  <div *ngIf="isLoading" class="loading">
+    <div class="spinner"></div>
+    <p>Scanning events...</p>
+  </div>
+
+  <div *ngIf="success" class="banner success">
+    {{ success }}
+  </div>
+  
+  <div *ngIf="error" class="banner danger">
+    {{ error }}
+  </div>
+
+  <section *ngIf="hasSearched && !isLoading" class="results surface-card">
+    <header>
+      <div>
+        <p class="eyebrow">Results</p>
+        <h2>Matching events</h2>
+      </div>
+      <span class="count-chip">{{ events.length }} found</span>
+    </header>
+
+    <div *ngIf="events.length === 0" class="empty-state">
+      No events found. Try relaxing the filters or picking a different time window.
+    </div>
+
+    <div class="result-grid">
+      <article class="result-card" *ngFor="let event of events">
+        <div>
+          <p class="event-date">{{ event.date | date:'EEE · MMM d · h:mm a' }}</p>
+          <h3>{{ event.title }}</h3>
+          <p class="text-muted">{{ event.description }}</p>
+        </div>
+        <div class="result-meta">
+          <span class="pill">📍 {{ event.location }}</span>
+          <button 
+            class="btn btn-primary" 
+            [routerLink]="['/events', event.id || event._id]"
+            [disabled]="!(event.id || event._id)">
+            View details
+          </button>
+        </div>
+      </article>
+    </div>
+  </section>
+</div>

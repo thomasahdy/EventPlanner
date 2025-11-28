@@ -7,7 +7,7 @@ class PyObjectId(str):
         yield cls.validate
 
     @classmethod
-    def validate(cls, v):
+    def validate(cls, v, field=None):
         if not ObjectId.is_valid(v):
             raise ValueError("Invalid objectid")
         return str(v)
@@ -17,7 +17,7 @@ class UserIn(BaseModel):
     password: str
 
 class UserOut(BaseModel):
-    id: PyObjectId = Field(..., alias="_id")
+    id: PyObjectId = Field(default_factory=lambda: PyObjectId(""), alias="_id")
     email: EmailStr
 
     class Config:
