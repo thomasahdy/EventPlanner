@@ -22,7 +22,7 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
-
+NEXT_STEPS.md
 # Virtual Environment
 backend/venv/
 backend/env/

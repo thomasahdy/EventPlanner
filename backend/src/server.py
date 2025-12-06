@@ -4,13 +4,17 @@ from .routers.user_routers import router
 from .routers.event_routers import router as event_router
 from .db import client  
 from .config import settings
+import os
 
 app = FastAPI(title="EventPlanner - Phase0 (Auth)")
 
 # CORS middleware configuration
+# Allow origins from environment variable or default to localhost for development
+cors_origins_str = os.getenv("CORS_ORIGINS", "http://localhost:4200,http://localhost:80,http://localhost")
+cors_origins = [origin.strip() for origin in cors_origins_str.split(",")]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:4200"],  # Angular default port
+    allow_origins=cors_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

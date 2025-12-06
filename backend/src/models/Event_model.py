@@ -38,7 +38,7 @@ class EventOut(EventIn):
     def dict(self, **kwargs):
         """Override dict to ensure both id and _id are present"""
         data = super().dict(**kwargs)
-        # Ensure both id and _id are in the dict for frontend compatibility
+        
         if "id" in data and "_id" not in data:
             data["_id"] = data["id"]
         elif "_id" in data and "id" not in data:

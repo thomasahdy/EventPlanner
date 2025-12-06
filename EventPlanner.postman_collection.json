@@ -1,0 +1,137 @@
+{
+	"info": {
+		"_postman_id": "2ccf89be-9a2f-431f-b110-4f824bc7d232",
+		"name": "EventPlanner",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44631078",
+		"_collection_link": "https://thomasahdy.postman.co/workspace/Thomas-Ahdy's-Workspace~e4f44339-8c1a-465a-8fe4-0fb001d09118/collection/44631078-2ccf89be-9a2f-431f-b110-4f824bc7d232?action=share&source=collection_link&creator=44631078"
+	},
+	"item": [
+		{
+			"name": "User Signup",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"alice@example.com\",\r\n  \"password\": \"StrongPass123\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/auth/signup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"auth",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User login",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Create Evnet",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/events/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"events",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Organized Event",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "invited Events",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Invite User to Event",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Event",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjQzMzY3ODYsInN1YiI6IjY5Mjk5MGZhOTE5ZTE2YzA3ZWM2MDhhZCJ9.dnvOgfJBaaL3cMBw2_68MQDEZjhLRUbNgp-xBRy3OHA",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8000/api/events/69299532919e16c07ec608af",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"events",
+						"69299532919e16c07ec608af"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Attendance Statu",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "search event",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}

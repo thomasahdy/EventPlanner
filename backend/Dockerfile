@@ -1,11 +1,17 @@
-FROM python:3
 
-WORKDIR /usr/src/app
+FROM python:3.11-slim
 
-COPY requirements.txt ./
+
+WORKDIR /app
+
+
+COPY requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-EXPOSE 3001
+COPY src/ ./src/
 
-CMD ["python" , "./src/server.py"]
+
+EXPOSE 8000
+
+CMD ["uvicorn", "src.server:app", "--host", "0.0.0.0", "--port", "8000"]

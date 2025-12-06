@@ -1,0 +1,51 @@
+services:
+
+  mongodb:
+    image: mongo:7.0
+    container_name: eventplanner_mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    volumes:
+      - mongodb_data:/data/db
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: eventplanner_backend
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      - MONGO_URL=mongodb://admin:password@mongodb:27017/?authSource=admin
+      - DB_NAME=eventplanner
+      - JWT_SECRET=your_jwt_secret_key_here
+      - CORS_ORIGINS=http://localhost:80,http://frontend:80,http://localhost
+    depends_on:
+      - mongodb
+    volumes:
+      - ./backend:/app
+
+
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: eventplanner_frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app
+
+volumes:
+  mongodb_data:
