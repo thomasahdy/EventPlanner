@@ -1,0 +1,2 @@
+APP_MODULE=src.server:app
+APP_FILE=src/server.py
