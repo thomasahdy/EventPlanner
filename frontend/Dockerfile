@@ -8,19 +8,18 @@ RUN npm run build
 
 # ---- Runtime stage ----
 FROM nginx:alpine
-
-# Remove default config
 RUN rm /etc/nginx/conf.d/default.conf
 
-# Copy our custom config
+
+COPY --from=builder /app/dist/frontend/browser /usr/share/nginx/html
+
+
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Copy build output
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-# Fix permissions for OpenShift
-RUN chmod -R g+rwX /var/cache/nginx /var/run /usr/share/nginx/html && \
-    chgrp -R 0 /var/cache/nginx /var/run /usr/share/nginx/html
+EXPOSE 80
 
 EXPOSE 8080
 CMD ["nginx", "-g", "daemon off;"]
