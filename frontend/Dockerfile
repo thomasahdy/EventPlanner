@@ -6,20 +6,15 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-# ---- Runtime stage ----
-FROM nginx:alpine
-RUN rm /etc/nginx/conf.d/default.conf
+# ---- Runtime stage (OpenShift compatible) ----
+FROM registry.access.redhat.com/ubi9/nginx-120
 
+# Copy Angular build output
+COPY --from=builder /app/dist/frontend /usr/share/nginx/html
 
-COPY --from=builder /app/dist/frontend/browser /usr/share/nginx/html
-
-
+# Copy nginx config
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Copy build output
-COPY --from=builder /app/dist /usr/share/nginx/html
-
-EXPOSE 80
-
 EXPOSE 8080
+
 CMD ["nginx", "-g", "daemon off;"]
