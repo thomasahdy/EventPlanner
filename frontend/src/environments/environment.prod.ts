@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://localhost:8000'  // Will be overridden by docker-compose or OpenShift
+  apiUrl: 'https://backend-crt-11999133-dev.apps.rm3.7wse.p1.openshiftapps.com'
 };
 
