@@ -1,5 +1,5 @@
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:8000'
+  apiUrl: 'https://backend-crt-11999133-dev.apps.rm3.7wse.p1.openshiftapps.com'
 };
 
